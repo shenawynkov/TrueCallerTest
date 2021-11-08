@@ -74,10 +74,10 @@ class HomeViewModel @Inject constructor(
                     countedWords.value=words
                 }
                 is Resource.Error -> {
-                    everyChar.value = result.message
+                    countedWords.value = result.message
                 }
                 is Resource.Loading -> {
-                    everyChar.value = "loading"
+                    countedWords.value = "loading"
                 }
             }
         }.launchIn(viewModelScope)
