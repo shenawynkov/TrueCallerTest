@@ -1,5 +1,6 @@
 package com.shenawynkov.truecallertest.ui
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +25,8 @@ class HomeViewModel @Inject constructor(
     val everyChar = MutableLiveData<String>()
     val countedWords = MutableLiveData<String>()
 
-    init {
+    fun getContent()
+    {
         get10thChar()
         getEvery10thChar()
         getWordsCounted()

@@ -3,4 +3,5 @@
     <string name="the_10th_char">"the 10th character : "</string>
     <string name="every10th_char">"every 10th character "</string>
     <string name="counted_words">Counted words</string>
+    <string name="load_data">Load data</string>
 </resources>
