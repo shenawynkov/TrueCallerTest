@@ -13,10 +13,12 @@ import javax.inject.Inject
 class Get10thCharUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     operator fun invoke(): Flow<Resource<Char>> = flow {
         try {
+            //emit loading until receiving data
             emit(Resource.Loading<Char>())
             val response = homeRepo.getContent()
             val doc: Document = Jsoup.parse(response)
-           val char=  doc.text()[9]
+            val char = doc.text()[9]
+            //emit success with 10th char
             emit(Resource.Success(char))
         } catch (e: HttpException) {
             emit(Resource.Error<Char>(e.localizedMessage ?: "An unexpected error occured"))

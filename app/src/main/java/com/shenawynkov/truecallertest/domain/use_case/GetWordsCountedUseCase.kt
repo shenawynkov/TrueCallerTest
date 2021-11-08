@@ -14,9 +14,11 @@ import javax.inject.Inject
 class GetWordsCountedUseCase @Inject constructor(private val homeRepo: HomeRepo) {
     operator fun invoke(): Flow<Resource<HashMap<String, Int>>> = flow {
         try {
+            //emit loading until receiving data
             emit(Resource.Loading<HashMap<String, Int>>())
             val response = homeRepo.getContent()
             val doc: Document = Jsoup.parse(response)
+            //emit success with hash map of words and it is count
             emit(Resource.Success(createHashMap(doc.text())))
         } catch (e: HttpException) {
             emit(
@@ -31,14 +33,11 @@ class GetWordsCountedUseCase @Inject constructor(private val homeRepo: HomeRepo)
 
 
     private fun createHashMap(text: String): HashMap<String, Int> {
-        val occurrences: HashMap<String, Int> = HashMap()
 
-        //responseString = responseString.replace("[^a-zA-Z0-9]".toRegex(), " ")
+        val occurrences: HashMap<String, Int> = HashMap()
         val splitWords = text.split(" ").toTypedArray()
         for (word in splitWords) {
-            /*    if (StringUtil.isNumeric(word)) {
-                    continue
-                }*/
+            //check if the word already exist on map if so modify it is count if not init count = 0
             var oldCount: Int? = occurrences.get(word)
             if (oldCount == null) {
                 oldCount = 0

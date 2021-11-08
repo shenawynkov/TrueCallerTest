@@ -25,8 +25,7 @@ class HomeViewModel @Inject constructor(
     val everyChar = MutableLiveData<String>()
     val countedWords = MutableLiveData<String>()
 
-    fun getContent()
-    {
+    fun getContent() {
         get10thChar()
         getEvery10thChar()
         getWordsCounted()
@@ -63,15 +62,17 @@ class HomeViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
     private fun getWordsCounted() {
         getWordsCountedUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    var words=""
+                    var words = ""
+                    //separate each item and it's count in a separate line
                     result.data?.forEach { (key, value) ->
-                       words+= "$key   $value\n"
+                        words += "$key   $value\n"
                     }
-                    countedWords.value=words
+                    countedWords.value = words
                 }
                 is Resource.Error -> {
                     countedWords.value = result.message
